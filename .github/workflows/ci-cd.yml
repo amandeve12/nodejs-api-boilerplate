@@ -12,7 +12,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: app  # Set default working directory
+        working-directory: backend  # Set default working directory
 
     services:
       mongo:
