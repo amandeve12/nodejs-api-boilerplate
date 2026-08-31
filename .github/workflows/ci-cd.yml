@@ -1,35 +1,28 @@
-name: CI/CD Pipeline
+name: Node.js CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   pull_request:
+    branches: [ "main" ]
 
 jobs:
-  build-and-deploy:
+  build:
+
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: backend  # Set default working directory
-
-    services:
-      mongo:
-        image: mongo
-        ports: ['27017:27017']
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
+          cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build the app
-        run: npm run buildgit branch -M main
+      - name: Run tests
+        run: npm test
